@@ -100,7 +100,7 @@ static iomux_v3_cfg_t const gpmi_pads[] = {
 	MX7D_PAD_SAI1_TX_DATA__NAND_READY_B	| MUX_PAD_CTRL(NAND_PAD_READY0_CTRL),
 };
 
-static void setup_gpmi_nand(void)
+void setup_gpmi_nand(void)
 {
 	imx_iomux_v3_setup_multiple_pads(gpmi_pads, ARRAY_SIZE(gpmi_pads));
 
@@ -217,7 +217,7 @@ int board_init(void)
 	return 0;
 }
 
-#ifdef CONFIG_DM_PMIC
+#if (defined(CONFIG_DM_PMIC) && !defined(CONFIG_SPL_BUILD))
 int power_init_board(void)
 {
 	struct udevice *dev;

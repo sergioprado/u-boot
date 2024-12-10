@@ -215,6 +215,10 @@ static void _mxc_serial_setbrg(struct mxc_uart *base, unsigned long clk,
 #error "define CFG_MXC_UART_BASE to use the MXC UART driver"
 #endif
 
+#ifndef CFG_MXC_UART_USE_DTE
+#define CFG_MXC_UART_USE_DTE false
+#endif
+
 #define mxc_base	((struct mxc_uart *)CFG_MXC_UART_BASE)
 
 static void mxc_serial_setbrg(void)
@@ -224,7 +228,7 @@ static void mxc_serial_setbrg(void)
 	if (!gd->baudrate)
 		gd->baudrate = CONFIG_BAUDRATE;
 
-	_mxc_serial_setbrg(mxc_base, clk, gd->baudrate, false);
+	_mxc_serial_setbrg(mxc_base, clk, gd->baudrate, CFG_MXC_UART_USE_DTE);
 }
 
 static int mxc_serial_getc(void)
@@ -262,7 +266,7 @@ static int mxc_serial_tstc(void)
  */
 static int mxc_serial_init(void)
 {
-	_mxc_serial_init(mxc_base, false);
+	_mxc_serial_init(mxc_base, CFG_MXC_UART_USE_DTE);
 
 	serial_setbrg();
 
